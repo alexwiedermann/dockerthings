@@ -1,0 +1,26 @@
+version: '3'
+services:
+    web:
+        build:
+            context: ./nginx
+        volumes:
+            - "/c/Projetos:/var/www/html"
+        ports:
+            - "80:80"
+            - "443:443"
+        restart: always
+        links:
+            - php
+        depends_on:
+            - php
+    php:
+        build:
+            context: ./php
+        restart: always
+        volumes:
+            - "/c/Projetos:/var/www/html"
+    composer:
+        image: "composer"
+        volumes:
+            - "/c/Projetos:/var/www/html"
+        command: install 
